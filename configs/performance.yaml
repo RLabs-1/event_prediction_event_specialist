@@ -1,0 +1,67 @@
+model:
+  name: "meta-llama/Llama-3.2-1B"
+  inference:
+    max_tokens: 10240 # Max number of generated words
+    temperature: 0.7
+    top_p: 0.9
+    device: "cuda"
+  python_file: "performance"
+
+performance_detection:
+  cpu_threshold: 80
+  memory_threshold: 1024
+  performance_keywords:
+    - "latency"
+    - "throughput"
+    - "response time"
+    - "requests per second"
+    - "transactions per second"
+    - "CPU utilization"
+    - "memory usage"
+    - "disk I/O"
+    - "IOPS"
+    - "bandwidth"
+    - "cache hit"
+    - "cache miss"
+    - "heap usage"
+    - "GC pause"
+    - "queue length"
+    - "queue wait time"
+    - "page load time"
+    - "TTFB"
+    - "time to interactive"
+    - "concurrency limit"
+    - "scalability"
+    - "resource utilization"
+    - "peak load"
+    - "throughput limit"
+    - "bottleneck"
+    - "degradation"
+
+  prompt_starter: "You are a performance diagnostics assistant. You receive 
+    system metrics and logs with future predictions of issues.
+    Are there any predicted performance issues? Reply only with 'Yes' or 'No'
+    and nothing else."
+
+  prompt_filter: "You are a performance diagnostics assistant. You receive 
+    system metrics and logs with future predictions of issues. 
+  Here's a list of possible benchmarks to look for, reply with only a string
+  of the found benchmarks to look out for."
+
+  prompt_template:
+    "You are a performance diagnostics assistant. You receive 
+    system metrics and logs with future predictions of performance issues.
+    Identify and provide more context and actionable insights 
+    in the following list of benchmarks to lookout for."
+
+#logging:
+#  level: "INFO"
+#  handlers:
+#    - "console"
+
+#environment:
+#  name: "local"
+#  service_endpoint: "http://localhost:8000"
+
+#integrations:
+#  monitoring_service: "Prometheus"
