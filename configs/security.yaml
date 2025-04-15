@@ -1,0 +1,51 @@
+model:
+  name: "meta-llama/Llama-3.2-1B"
+  inference:
+    max_tokens: 10240
+    temperature: 0.7
+    top_p: 0.9
+    device: "cuda"
+  python_file: "security_analysis"
+
+security_detection:
+  threat_indicators:
+    - "unauthorized access"
+    - "login failure"
+    - "privilege escalation"
+    - "suspicious IP"
+    - "port scan"
+    - "malware detected"
+    - "command injection"
+    - "SQL injection"
+    - "cross-site scripting"
+    - "buffer overflow"
+    - "denial of service"
+    - "token misuse"
+    - "firewall breach"
+    - "ransomware"
+    - "backdoor access"
+    - "anomalous traffic"
+    - "data exfiltration"
+    - "zero-day"
+    - "CVE"
+    - "brute-force"
+    - "unexpected shell"
+
+  prompt_starter:
+    "You are a cybersecurity specialist AI. You receive logs and telemetry with predicted future activity.
+    Are there signs of a possible intrusion, exploit, or breach? 
+    Reply only with 'Yes' or 'No' and nothing else."
+
+  prompt_filter:
+    "You are analyzing system logs for cyber threat indicators.
+    Identify and return a list of relevant threat keywords or behaviors that might signal a security incident."
+
+  prompt_template:
+    "You are a cybersecurity specialist. Based on the predicted future logs and threat indicators provided,
+    perform a threat assessment. Identify:
+    - The type of threat or attack (e.g., intrusion, exploit, brute-force)
+    - Likely method and entry point
+    - Evidence in logs or system behavior
+    - Immediate mitigation steps
+    - Long-term prevention measures
+    Be detailed and assume the reader is a security analyst or engineer."

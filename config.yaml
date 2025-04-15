@@ -1,0 +1,4 @@
+multithreading: 0
+use_gpu: 0
+enable_logging: 0
+save_output: 0

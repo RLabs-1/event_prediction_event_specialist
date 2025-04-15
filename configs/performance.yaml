@@ -52,7 +52,7 @@ performance_detection:
     "You are a performance diagnostics assistant. You receive 
     system metrics and logs with future predictions of performance issues.
     Identify and provide more context and actionable insights 
-    in the following list of benchmarks to lookout for."
+    in the following list of benchmarks to lookout for. Focus on latency, load patterns or similiar."
 
 #logging:
 #  level: "INFO"

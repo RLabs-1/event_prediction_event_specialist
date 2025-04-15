@@ -1,0 +1,48 @@
+model:
+  name: "meta-llama/Llama-3.2-1B"
+  inference:
+    max_tokens: 10240
+    temperature: 0.7
+    top_p: 0.9
+    device: "cuda"
+  python_file: "error_prediction"
+
+error_detection:
+  critical_keywords:
+    - "exception"
+    - "stack trace"
+    - "segmentation fault"
+    - "core dumped"
+    - "crash"
+    - "fatal error"
+    - "unhandled"
+    - "panic"
+    - "timeout"
+    - "connection refused"
+    - "memory leak"
+    - "out of memory"
+    - "OOMKilled"
+    - "null pointer"
+    - "NaN"
+    - "retry limit"
+    - "unexpected shutdown"
+    - "500 error"
+    - "503"
+    - "service unavailable"
+    - "permission denied"
+    - "resource not found"
+
+  prompt_starter:
+    "You are an AI assistant specialized in system reliability.
+    You receive system logs and error traces. 
+    Are there any indications of critical future errors? 
+    Reply only with 'Yes' or 'No' and nothing else."
+
+  prompt_filter:
+    "You are a diagnostics assistant reviewing logs and metrics.
+    Return a string of critical keywords that may indicate system failure or instability."
+
+  prompt_template:
+    "You are a system reliability assistant analyzing logs for future system failure prediction.
+    Based on the following error signals and keywords, provide insights 
+    into the type of risk, possible causes, and suggested prevention steps."
