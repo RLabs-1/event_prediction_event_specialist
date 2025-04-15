@@ -82,7 +82,7 @@ eventspecialist/
 
 3. **Run Event Reasoning**:
    ```bash
-   python scripts/run_reasoning.py --config configs/specialist_config.yaml (deprecated)
+   ~~python scripts/run_reasoning.py --config configs/specialist_config.yaml~~ (deprecated)
    python -m scripts.run_reasoning --config configs/specialist_config.yaml
    ```
 
