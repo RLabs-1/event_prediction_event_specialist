@@ -1,9 +1,7 @@
 import argparse
 import os
 import yaml
-import torch
 import sys
-
 from src.reasoning.performance import run_performance_reason
 
 
@@ -37,11 +35,14 @@ if __name__ == "__main__":
     config_exists(config_path)
     config = load_config(config_path)
 
-    print("Loaded Config Files")
+    print("Loaded Config File")
 
-    performance_bool, performance_output = run_performance_reason(config)
-    if performance_bool:
-        print(performance_output)
+    print(config_path)
+
+    if config_path == "configs/performance.yaml":
+        performance_bool, performance_output = run_performance_reason(config)
+        if performance_bool:
+            print(performance_output) # Return to main.py
 
 
 

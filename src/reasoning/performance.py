@@ -3,6 +3,7 @@ import sys
 import json
 import torch
 from transformers import pipeline
+import time
 
 def load_json(filename="logs.json"):
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
@@ -18,6 +19,20 @@ def load_json(filename="logs.json"):
             raise ValueError(f"Failed to parse JSON in '{filename}': {e}")
 
     return data
+
+def call_with_retries(pipe, input_text, max_retries=3, backoff_seconds=2):
+    attempt = 0
+    while attempt < max_retries:
+        try:
+            response = pipe(input_text)
+            return str(response)
+
+        except Exception as e:
+            attempt += 1
+            print(f"[Retry {attempt}/{max_retries}] Failed: {e}")
+            time.sleep(backoff_seconds * attempt)
+
+    raise RuntimeError(f"All retries failed in Performance.py")
 
 
 def run_performance_reason(config):
@@ -38,26 +53,23 @@ def run_performance_reason(config):
         device_map="auto"
     )
 
-    print("Injected prompt_starter")
+    output = call_with_retries(
+        pipe,
+        str(logs) + config["performance_detection"]["prompt_starter"]
+    )
 
-    output = pipe(str(logs) + config["performance_detection"]["prompt_starter"])
+    if output.strip() == "No":
+        return False, "No performance predictions were found."
 
-    if output == "No":
-        return False , "No performance predictions were found."
+    list_of_keywords = call_with_retries(
+        pipe,
+        config["performance_detection"]["prompt_filter"] + " " + config["performance_detection"]["performance_keywords"]
+    )
 
-    list_of_keywords = pipe(config["performance_detection"]["prompt_filter"] + " " + config["performance_detection"]["performance_keywords"])
+    result = call_with_retries(
+        pipe,
+        config["performance_detection"]["prompt_template"] + str(list_of_keywords)
+    )
 
-    return True, pipe(config["performance_detection"]["prompt_template"] + str(list_of_keywords))
-
-
-
-
-
-
-
-
-
-
-
-
+    return True, result
 
