@@ -1,11 +1,18 @@
-import os
+import os, sys
 import time
-from kafka import KafkaConsumer, KafkaProducer
-from kafka.errors import NoBrokersAvailable
+#from kafka import KafkaConsumer, KafkaProducer
+#from kafka.errors import NoBrokersAvailable
 from dotenv import load_dotenv
+from logger import setup_logger
+import logging
+
 
 load_dotenv()
 
+setup_logger() # Setup's up logger
+
+
+"""
 KAFKA_BROKER = os.getenv("KAFKA_BROKER")
 TOPIC_IN = os.getenv("ESM_TOPIC")
 TOPIC_OUT = os.getenv("LLM_TOPIC")
@@ -30,3 +37,4 @@ for message in consumer:
     ai_enhancement = f"AI-enhanced: {prediction}"
     producer.send(TOPIC_OUT, ai_enhancement.encode(ENCODING))
     print(f"Sent to {TOPIC_OUT}: {ai_enhancement}", flush=True)
+"""

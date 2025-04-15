@@ -2,6 +2,8 @@ import argparse
 import os
 import yaml
 import sys
+from logger import setup_logger  # assuming you have a logger.py
+import logging
 from src.reasoning.performance import run_performance_reason
 
 
@@ -30,19 +32,24 @@ def load_config(config_path):
 
 
 if __name__ == "__main__":
+    setup_logger()
 
-    config_path = get_config()
-    config_exists(config_path)
-    config = load_config(config_path)
+    try:
+        config_path = get_config()
+        config_exists(config_path)
+        config = load_config(config_path)
+    except Exception as e:
+        logging.error(e)
+        sys.exit(1)
 
-    print("Loaded Config File")
+    logging.info(f"{config_path} loaded.")
 
-    print(config_path)
 
     if config_path == "configs/performance.yaml":
         performance_bool, performance_output = run_performance_reason(config)
         if performance_bool:
             print(performance_output) # Return to main.py
+            logging.info("Performance Specialist - Output Printed to Console.")
 
 
 

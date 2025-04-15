@@ -4,6 +4,8 @@ import json
 import torch
 from transformers import pipeline
 import time
+from logger import setup_logger
+import logging
 
 def load_json(filename="logs.json"):
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
@@ -29,20 +31,21 @@ def call_with_retries(pipe, input_text, max_retries=3, backoff_seconds=2):
 
         except Exception as e:
             attempt += 1
-            print(f"[Retry {attempt}/{max_retries}] Failed: {e}")
+            logging.error(f"[Retry {attempt}/{max_retries}] Failed: {e}")
             time.sleep(backoff_seconds * attempt)
 
-    raise RuntimeError(f"All retries failed in Performance.py")
+    logging.error(f"All retries failed in Performance.py")
+    sys.exit(1)
 
 
 def run_performance_reason(config):
+    setup_logger()
 
     try:
         logs = load_json()
-    except FileNotFoundError as fnf_error:
-        raise fnf_error
-    except ValueError as val_error:
-        raise val_error
+    except Exception as exc:
+        logging.error(exc)
+        sys.exit(1)
 
 
     pipe = pipeline(
