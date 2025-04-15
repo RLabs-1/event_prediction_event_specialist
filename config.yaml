@@ -1,4 +1,4 @@
-multithreading: 0
-use_gpu: 0
-enable_logging: 0
-save_output: 0
+multithreading: 0 # Enable Multi-threading with LLM requests.
+use_gpu: 0        # Run calculations on dedicated GPU instead on CPU (For local LLMs only).
+enable_logging: 0 # Disable or Enable logging for debugging.
+save_output: 0    # Save output as a .txt file instead of printing to terminal.
