@@ -82,7 +82,8 @@ eventspecialist/
 
 3. **Run Event Reasoning**:
    ```bash
-   python scripts/run_reasoning.py --config configs/specialist_config.yaml
+   python scripts/run_reasoning.py --config configs/specialist_config.yaml (X)
+   python -m scripts.run_reasoning --config configs/specialist_config.yaml 
    ```
 
 4. **Dockerized Deployment**:
